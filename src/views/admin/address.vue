@@ -1,11 +1,27 @@
+<!--
+ * @Author: 测试专用
+ * @Date: 2019-11-17 10:23:49
+ * @LastEditTime: 2019-11-17 15:59:48
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \12306\src\views\admin\address.vue
+ -->
+
 <template>
   <div class="checkAddress">
-    <div class="positionGroup" :class="curFocus==true?'searchActive':''">
+    <div class="positionGroup" :class="curFocus == true ? 'searchActive' : ''">
       <top-nav :showContent="showContent" v-if="!curFocus"></top-nav>
       <!--搜索框-->
       <div class="search">
         <span class="icon-search"></span>
-        <input type="text" placeholder="中文/拼音/首字母" @focus="translate" @blur="toTranslate" v-model="searchContent" @keydown.enter="searchCity">
+        <input
+          type="text"
+          placeholder="中文/拼音/首字母"
+          @focus="translate"
+          @blur="toTranslate"
+          v-model="searchContent"
+          @keydown.enter="searchCity"
+        />
       </div>
     </div>
     <!--位置推荐-->
@@ -16,7 +32,7 @@
           <span>根据您的定位推荐</span>
           <ul class="item-box clearfix">
             <li class="city-name">
-              <a href="javascript:;">{{curCity}}</a>
+              <a href="javascript:;">{{ curCity }}</a>
             </li>
           </ul>
         </div>
@@ -26,8 +42,12 @@
         <div class="location-item">
           <span v-if="userAddress.historyCity">历史纪录</span>
           <ul class="item-box clearfix">
-            <li class="city-name" v-for="(city ,index) in userAddress.historyCity">
-              <a href="javascript:;">{{city | sub}}</a></li>
+            <li
+              class="city-name"
+              v-for="(city, index) in userAddress.historyCity"
+            >
+              <a href="javascript:;">{{ city | sub }}</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -37,8 +57,8 @@
           <span v-if="userAddress.hotCity">热门城市</span>
           <span v-if="userAddress.hotCity">热门城市</span>
           <ul class="item-box clearfix">
-            <li class="city-name" v-for="(city,index) in userAddress.hotCity">
-              <a href="javascript:;">{{city | sub}}</a>
+            <li class="city-name" v-for="(city, index) in userAddress.hotCity">
+              <a href="javascript:;">{{ city | sub }}</a>
             </li>
           </ul>
         </div>
@@ -46,10 +66,14 @@
     </div>
     <!--字母定位-->
     <div class="spell-location" v-if="!curFocus">
-      <div class="city" v-for="(citys,index) in allCity">
-        <span class="city-litter" :id="citys.flage">{{citys.flage}}</span>
-        <ul class="city-list" v-for="(city,ind) in citys.names">
-          <li><a href="javascript:;" @click="checkCity(city.cityname)">{{city.cityname}}</a></li>
+      <div class="city" v-for="(citys, index) in allCity">
+        <span class="city-litter" :id="citys.flage">{{ citys.flage }}</span>
+        <ul class="city-list" v-for="(city, ind) in citys.names">
+          <li>
+            <a href="javascript:;" @click="checkCity(city.cityname)">{{
+              city.cityname
+            }}</a>
+          </li>
         </ul>
       </div>
 
@@ -90,8 +114,8 @@
     </div>
     <div class="mask" v-if="curFocus">
       <ul class="searchList" v-if="searchCitys">
-        <li class="searchCity" v-for="(city,index) in searchCitys">
-          <a href="javascript:;" @click="checkCity(city)">{{city}}</a>
+        <li class="searchCity" v-for="(city, index) in searchCitys">
+          <a href="javascript:;" @click="checkCity(city)">{{ city }}</a>
         </li>
       </ul>
       <ul class="noData" v-if="!searchCitys">
@@ -107,11 +131,11 @@
 import TopNav from '@/components/common/topNav/index'
 import location from '@/utils/location'
 export default {
-  name: "address",
+  name: 'address',
   components: {
     TopNav
   },
-  data () {
+  data() {
     return {
       // 顶部导航
       showContent: {
@@ -119,100 +143,112 @@ export default {
         titleContent: '选择城市'
       },
 
-      curCity: "",  // 当前城市
+      curCity: '', // 当前城市
       allCity: [],
       userAddress: {},
       curFocus: false,
       citysName: [], // 所有城市名字
-      searchContent: "",
+      searchContent: '',
       searchCitys: [],
-      checkedCity: "", //选择的城市
+      checkedCity: '' //选择的城市
     }
   },
-  computed: {
-
-  },
+  computed: {},
   filters: {
-    sub (value) {
-      return value.substring(0, 2);
+    sub(value) {
+      return value.substring(0, 2)
     }
   },
-  created () {
-    let self = this;
+  created() {
+    let x = this.$route.query.flag
+    alert(x)
+    let self = this
     /*
        获取到当前位置
     */
-    location(function (url) {
-      return self.$http.jsonp(url).then(res => {
-        if (res.body.status == 0) {
-          //  定位当前城市
-          self.curCity = res.body.result.addressComponent.city.replace(/市/, "");
+    location(function(url) {
+      return self.$http.jsonp(url).then(
+        res => {
+          if (res.body.status == 0) {
+            //  定位当前城市
+            self.curCity = res.body.result.addressComponent.city.replace(
+              /市/,
+              ''
+            )
+          }
+        },
+        err => {
+          console.log(err)
         }
-
-      }, err => {
-        console.log(err);
-      })
-    });
+      )
+    })
     /*
        获取全部城市
     */
-    this.$http.get('/citys/all').then(res => {
-      if (res.body.status === '0') {
-        /*a-z 的数据*/
-        for (let key in res.body.result) {
-          let param = {};
-          param.flage = key;
-          param.names = res.body.result[key];
-          self.allCity.push(param);
-        }
-        /*所有城市名字*/
-        for (let key in res.body.result) {
-          for (let i = 0; i < res.body.result[key].length; i++) {
-            this.citysName.push(res.body.result[key][i].cityname);
+    this.$http.get('/citys/all').then(
+      res => {
+        if (res.body.status === '0') {
+          /*a-z 的数据*/
+          for (let key in res.body.result) {
+            let param = {}
+            param.flage = key
+            param.names = res.body.result[key]
+            self.allCity.push(param)
+          }
+          /*所有城市名字*/
+          for (let key in res.body.result) {
+            for (let i = 0; i < res.body.result[key].length; i++) {
+              this.citysName.push(res.body.result[key][i].cityname)
+            }
           }
         }
+      },
+      err => {
+        console.log(err)
       }
-    }, err => {
-      console.log(err);
-    });
+    )
     /*
        获取用户相关城市信息
     */
-    let userId = getCookie("userId");
-    this.$http.get('/users/address', { params: { "userId": userId } }).then(res => {
-      if (res.body.status === "-1") {
-        /*cookie过期*/
-        alert(0);
-      } else if (res.body.status === "1") {
-        this.userAddress = res.body.result;
-      }
-    }, err => { })
-
-
+    let userId = getCookie('userId')
+    this.$http.get('/users/address', { params: { userId: userId } }).then(
+      res => {
+        if (res.body.status === '-1') {
+          /*cookie过期*/
+          alert(0)
+        } else if (res.body.status === '1') {
+          this.userAddress = res.body.result
+        }
+      },
+      err => {}
+    )
   },
   methods: {
     /*搜索框获取焦点*/
-    translate () {
-      this.curFocus = true;
+    translate() {
+      this.curFocus = true
     },
-    toTranslate () {
-      this.curFocus = false;
-      this.searchContent = "";
-      this.searchCitys = [];
+    toTranslate() {
+      this.curFocus = false
+      this.searchContent = ''
+      this.searchCitys = []
     },
-    searchCity () {
-      this.searchCitys = [];
+    searchCity() {
+      this.searchCitys = []
       this.citysName.forEach(item => {
-        let index = item.indexOf(this.searchContent);
+        let index = item.indexOf(this.searchContent)
         if (index > -1) {
-          this.searchCitys.push(item);
+          this.searchCitys.push(item)
         }
-      });
+      })
     },
     /*选中city*/
-    checkCity (cityname) {
-      let flag = this.$route.query.flag;
-      this.$router.push({ path: '/home', query: { checkedCity: cityname, flag: flag } });
+    checkCity(cityname) {
+      let flag = this.$route.query.flag
+      this.$router.push({
+        path: '/home',
+        query: { checkedCity: cityname, flag: flag }
+      })
     }
   }
 }
@@ -257,7 +293,7 @@ export default {
       font-size: 16px;
     }
     .icon-search::after {
-      content: "\e903";
+      content: '\e903';
       padding: 0 6px;
       color: #d5d5d5;
     }
