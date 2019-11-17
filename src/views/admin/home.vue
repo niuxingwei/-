@@ -1,7 +1,7 @@
 <!--
  * @Author: 牛兴炜
  * @Date: 2019-10-28 22:12:02
- * @LastEditTime: 2019-11-17 16:33:20
+ * @LastEditTime: 2019-11-17 20:06:41
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \simple-login-master\src\views\admin\home.vue
@@ -24,11 +24,7 @@
         <div class="train-search-place clearfix">
           <span class="place-start">
             <span>始发站</span>
-            <router-link
-              class="link"
-              :to="{ path: '/address', query: { flag: 'start' } }"
-              >{{ startCity }}</router-link
-            >
+            <router-link class="link" :to="{ path: '/address', query: { flag: 'start' } }">{{ startCity }}</router-link>
           </span>
           <el-tooltip content="点击互换站点" placement="bottom" effect="light">
             <span class="svg-wrapper" @click="qiehuan">
@@ -38,11 +34,7 @@
 
           <span class="place-end">
             <span>终点站</span>
-            <router-link
-              class="link"
-              :to="{ path: '/address', query: { flag: 'end' } }"
-              >{{ endCity }}</router-link
-            >
+            <router-link class="link" :to="{ path: '/address', query: { flag: 'end' } }">{{ endCity }}</router-link>
             <!-- <router-link :to="{path:'/address',query:{flag:'end'}}">{{endCity}}</router-link> -->
           </span>
           <div class="train-search-style">
@@ -59,6 +51,67 @@
           <div style="text-align:right">
             <span class="el-icon-date"></span>
           </div>
+        </div>
+        <!-- <el-radio-group v-model="radio" :inline="true"> -->
+        <div style="text-align:left">
+          <el-radio v-model="radio" label="1" @change="radioChange">高铁</el-radio>
+        </div>
+        <div style="text-align:right">
+          <el-radio v-model="radio" label="2" style="text-align:right" @change="radioChange">学生票</el-radio>
+        </div>
+        <br>
+        <el-button type="primary" icon="el-icon-search" @click="search" class="searchBtn">查询</el-button>
+        <br>
+        <div class="train-search-tips">
+          <span class="el-icon-alarm-clock"></span>
+          <span class="tips-content">
+            <span>{{history1}}</span>
+            <span>{{history2}}</span>
+          </span>
+          <span class="tips-clear">
+            <el-link type="danger" @click="clearTips">清空全部</el-link>
+          </span>
+        </div>
+
+        <div class="home-section">
+          <div class="section" @click="service">
+            <span class="svg-wrapper">
+              <svg-icon icon-class="train"></svg-icon>
+            </span>
+            <p>正晚点</p>
+          </div>
+          <div class="section" @click="service">
+            <span class="svg-wrapper">
+              <svg-icon icon-class="eating"></svg-icon>
+            </span>
+            <p>订餐服务</p>
+          </div>
+          <div class="section" @click="service">
+            <span class="svg-wrapper">
+              <svg-icon icon-class="taxi"></svg-icon>
+            </span>
+            <p>约车服务</p>
+          </div>
+        </div>
+
+        <div class="home-notice">
+          <span class="svg-wrapper">
+            <svg-icon icon-class="police"></svg-icon>
+          </span>
+          <span class="notice-content">
+            温馨提示：铁路12306每日06：00-23：00提供服务，在铁路12306购票，改签和退票须不晚于开车前30分钟
+          </span>
+          <span class="icon-notice-clear"></span>
+
+        </div>
+
+      </div>
+      <div class="nav">
+        <div class="nav-item" v-for="(item,index) in navList" v-bind:class="{'active-color':curIndex ===index}" @click="curIndex = index">
+          <span class="svg-wrapper" @click="service">
+            <svg-icon :icon-class="item.iconName"></svg-icon>
+          </span>
+          <p>{{item.iconContent}}</p>
         </div>
       </div>
     </div>
@@ -78,7 +131,7 @@ export default {
     TopNav,
     TimePicker
   },
-  data() {
+  data () {
     return {
       //顶部导航
       showContent: {
@@ -88,15 +141,40 @@ export default {
       startCity: '', //始发站
       // 点击查询按钮是出发事件响应，向后台传递数据 用以检测车票余额
       endCity: '', //终点站
-      timeMask: false //时间选择遮罩层
+      timeMask: false, //时间选择遮罩层
+      radio: '0',
+      history1: "北京西-深圳",
+      history2: "北京-天津南",
+      //底部nav当前选中项
+      curIndex: 0,
+      //底部nav数据
+      navList: [
+        {
+          iconName: 'ticket',
+          iconContent: '车票预订'
+        },
+        {
+          iconName: 'travel',
+          iconContent: '商旅服务'
+        },
+        {
+          iconName: 'order',
+          iconContent: '订单中心'
+        },
+        {
+          iconName: '12306',
+          iconContent: '我的12306'
+        },
+      ],
+
     }
   },
-  created() {
+  created () {
     this.startCity = '北京西'
     this.endCity = '十堰'
   },
   computed: {
-    checkDate() {
+    checkDate () {
       console.log('测试时间')
       console.log(this.$store.state.checkedTime)
       return this.$store.state.checkedTime
@@ -104,11 +182,11 @@ export default {
   },
   methods: {
     /*选择时间*/
-    checkDateEvent() {
+    checkDateEvent () {
       this.timeMask = true
     },
     /*隐藏蒙版*/
-    hideMask() {
+    hideMask () {
       this.timeMask = false
     },
     /**
@@ -117,10 +195,65 @@ export default {
      * @return: 名称切换
      */
 
-    qiehuan() {
+    qiehuan () {
       let temCity = this.startCity
       this.startCity = this.endCity
       this.endCity = temCity
+      this.$notify({
+        title: '温馨提示',
+        message: '切换成功！',
+        type: 'success'
+      });
+    },
+    /**
+     * @description: 查询按钮
+     * @param {type} 
+     * @return: 展示数据
+     */
+    search () {
+      console.log("查询数据")
+
+      this.history1 = this.startCity + "-" + this.endCity;
+      let temCity = this.history2
+      this.history2 = this.history1
+      this.history1 = temCity
+
+    },
+    /**
+     * @description: 监听单选框事件变化
+     * @param {type} 
+     * @return: 打印变化值
+     */
+    radioChange (val) {
+      console.log('单选框的值为:')
+      console.log(val)
+    },
+    /**
+     * @description: 清空数据
+     * @param {type} 
+     * @return: 搜索历史清空
+     */
+    clearTips () {
+      this.history1 = ""
+      this.history2 = ""
+      this.$notify({
+        title: '温馨提示',
+        message: '已清空!',
+        type: 'success'
+      });
+    },
+    /**
+     * @description: 晚点、约车、饮食服务未开启
+     * @param {type} 
+     * @return: 
+     */
+    service () {
+      {
+        this.$notify.error({
+          title: '温馨提示',
+          message: '抱歉，该服务未开启哦'
+        });
+      }
     }
   }
 }
@@ -229,7 +362,7 @@ export default {
   }
 }
 .svg-wrapper {
-  font-size: 16px;
+  font-size: 19px;
   text-align: center;
   color: #1ec7a9;
 }
@@ -248,5 +381,128 @@ export default {
 .el-icon-date {
   text-align: right;
   color: #1ec7a9;
+}
+.searchBtn {
+  background-color: #21d9b4;
+  width: 100%;
+}
+.train-search-tips {
+  text-align: left;
+  margin-top: 16px;
+  font-size: 12px;
+  color: #bdbdbd;
+}
+/*清除全部*/
+.tips-clear {
+  text-align: right;
+  a {
+    color: #bdbdbd;
+  }
+  font-family: "Courier New", Courier, monospace;
+  font-size: 14px;
+}
+.el-icon-alarm-clock {
+  color: #21d9b4;
+}
+/*其他服务*/
+.home-section {
+  width: 100%;
+  height: 350px;
+  background-color: wheat;
+  margin-top: 20px;
+  margin-bottom: 16px;
+  height: 100px;
+  display: flex;
+  padding: 20px 0;
+  box-sizing: border-box;
+  .section {
+    flex: 1;
+    text-align: center;
+    position: relative;
+    svg-icon {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      background-color: rgba(31, 204, 169, 0.1);
+      border-radius: 50%;
+      font-size: 20px;
+      color: #1fcca9;
+    }
+    p {
+      font-size: 12px;
+      margin-top: 10px;
+      color: #b6b6b6;
+    }
+    i {
+      position: absolute;
+      top: 0;
+      left: 55%;
+    }
+  }
+  /*温馨提示*/
+  .home-notice {
+    width: 100%;
+    background-color: red;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    .icon-notice {
+      float: left;
+      width: 40px;
+      height: 40px;
+      background-color: red;
+      border-radius: 50%;
+      line-height: 40px;
+      text-align: center;
+      margin-left: 20px;
+      margin-right: 20px;
+    }
+    // .icon-notice::after {
+    //   content: "\e916";
+    //   color: #1fcca9;
+    //   font-size: 24px;
+    // }
+    // .notice-content {
+    //   font-size: 12px;
+    //   color: #bdbdbd;
+    // }
+  }
+}
+.home {
+  width: 100%;
+  /*height:100%;*/
+  height: 350px;
+  padding-bottom: 70px;
+  position: relative;
+}
+.notice-content {
+  font-size: 12px;
+  color: #bdbdbd;
+}
+/*选中设置颜色*/
+.active-color {
+  color: #1fcca9 !important;
+}
+/*底部nav*/
+.nav {
+  width: 100%;
+  height: 50px;
+  margin-bottom: 30px;
+  background-color: #fff;
+  position: fixed;
+  bottom: 0;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  display: flex;
+  .nav-item {
+    flex: 1;
+    text-align: center;
+    font-size: 10px;
+    padding: 5px;
+    color: #bdbdbd;
+    span {
+      font-size: 20px;
+    }
+  }
 }
 </style>
