@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-10-23 21:43:00
- * @LastEditTime: 2019-10-23 22:24:21
+ * @LastEditTime: 2019-11-17 10:25:55
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \simple-login-master\src\router\index.js
@@ -13,7 +13,7 @@ import errPage from '@/views/common/errPage'
 import login from '@/views/Login/login'
 import home from '@/views/admin/home'
 import register from '@/views/Login/register'
-
+import Address from '@/views/admin/address'
 Vue.use(Router)
 
 export default new Router({
@@ -33,6 +33,10 @@ export default new Router({
       path: '/home',
       name: 'home',
       component: home
+    },
+    {
+      path: '/address',
+      component: Address
     },
     {
       path: '/404',

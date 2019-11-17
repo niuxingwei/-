@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-10-23 22:26:40
- * @LastEditTime: 2019-11-17 09:19:11
+ * @LastEditTime: 2019-11-17 09:53:13
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \simple-login-master\src\views\Login\register.vue
@@ -190,8 +190,6 @@ export default {
   text-align: center;
   position: relative;
   margin-top: 5%;
-  background: url("https://www.12306.cn/index/images/pic/banner-login.jpg")
-    center center no-repeat;
 }
 .register-input {
   width: 420px;
