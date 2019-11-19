@@ -1,7 +1,7 @@
 <!--
  * @Author: 牛兴炜
  * @Date: 2019-10-28 22:12:02
- * @LastEditTime: 2019-11-17 20:06:41
+ * @LastEditTime: 2019-11-19 17:08:00
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \simple-login-master\src\views\admin\home.vue
@@ -18,7 +18,7 @@
           <span></span>
         </li>
       </ul>
-      <br />
+      <br>
       <!--查询购票-->
       <div class="home-train-search">
         <div class="train-search-place clearfix">
@@ -147,6 +147,7 @@ export default {
       history2: "北京-天津南",
       //底部nav当前选中项
       curIndex: 0,
+      fullscreenLoading: false,//是否触发加载事件
       //底部nav数据
       navList: [
         {
@@ -212,7 +213,17 @@ export default {
      */
     search () {
       console.log("查询数据")
-
+      this.$router.push('searchResult')
+      const loading = this.$loading({
+        lock: true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      });
+      setTimeout(() => {
+        loading.close();
+      }, 2000);
+      // 以下是“清除内容”的历史记录切换
       this.history1 = this.startCity + "-" + this.endCity;
       let temCity = this.history2
       this.history2 = this.history1

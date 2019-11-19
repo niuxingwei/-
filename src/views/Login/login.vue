@@ -1,7 +1,7 @@
 <!--
- * @Author: your name
+ * @Author:牛兴炜
  * @Date: 2019-10-23 21:43:00
- * @LastEditTime: 2019-11-17 09:08:19
+ * @LastEditTime: 2019-11-19 16:44:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \simple-login-master\src\views\Login\index.vue

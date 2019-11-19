@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-10-23 21:43:00
- * @LastEditTime: 2019-11-17 10:25:55
+ * @LastEditTime: 2019-11-19 16:43:01
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \simple-login-master\src\router\index.js
@@ -14,6 +14,8 @@ import login from '@/views/Login/login'
 import home from '@/views/admin/home'
 import register from '@/views/Login/register'
 import Address from '@/views/admin/address'
+
+import searchResult from '@/views/admin/searchResult'
 Vue.use(Router)
 
 export default new Router({
@@ -37,6 +39,10 @@ export default new Router({
     {
       path: '/address',
       component: Address
+    },
+    {
+      path: '/searchResult',
+      component: searchResult
     },
     {
       path: '/404',
