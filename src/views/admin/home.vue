@@ -1,7 +1,7 @@
 <!--
  * @Author: 牛兴炜
  * @Date: 2019-10-28 22:12:02
- * @LastEditTime: 2019-11-19 17:08:00
+ * @LastEditTime: 2019-11-24 09:57:07
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \simple-login-master\src\views\admin\home.vue
@@ -136,7 +136,7 @@ export default {
       //顶部导航
       showContent: {
         showBack: false,
-        titleContent: '车票查询'
+        titleContent: '车票查询系统'
       },
       startCity: '', //始发站
       // 点击查询按钮是出发事件响应，向后台传递数据 用以检测车票余额
@@ -213,7 +213,7 @@ export default {
      */
     search () {
       console.log("查询数据")
-      this.$router.push('searchResult')
+      this.$router.push('searchType')
       const loading = this.$loading({
         lock: true,
         text: 'Loading',
@@ -409,7 +409,7 @@ export default {
   a {
     color: #bdbdbd;
   }
-  font-family: "Courier New", Courier, monospace;
+  font-family: 'Courier New', Courier, monospace;
   font-size: 14px;
 }
 .el-icon-alarm-clock {
