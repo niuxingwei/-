@@ -1,22 +1,35 @@
 <!--
  * @Author: 牛兴炜
- * @Date: 2019-11-19 16:39:17
- * @LastEditTime: 2019-11-19 17:51:48
+ * @Date: 2019-11-25 08:14:58
+ * @LastEditTime: 2019-11-25 10:54:22
  * @LastEditors: Please set LastEditors
- * @Description: 车票查询结果界面
- * @FilePath: \12306\src\views\admin\searchResult.vue
+ * @Description: 列车信息查询
+ * @FilePath: \12306\src\views\admin\searchTrain.vue
  -->
 <template>
-  <div class="searchResult">
+  <div class="train">
     <div class="nav">
       <top-nav :showContent="showContent"></top-nav>
     </div>
     <br>
     <!-- 表格；data:显示的数据;stripe:是否为斑马纹table;highlight-current-row:是否要高亮当前行;border:是否带有纵向边框；v-loading:加载数据时显示 -->
-    <el-table :row-class-name="tableRowClassName" :data="queryTicketTable" stripe highlight-current-row border v-loading="dataListLoading">
+    <el-table :row-class-name="tableRowClassName" :data="queryTrainTable" border v-loading="dataListLoading">
       <el-table-column header-align="center" align="center" width="55" type="index" label="  "></el-table-column>
-      <el-table-column prop="City" header-align="center" align="center" label="City"></el-table-column>
-      <el-table-column prop="Province" header-align="center" align="center" label="Province"></el-table-column>
+      <el-table-column prop="SStation" header-align="center" align="center" label="始发站"></el-table-column>
+      <el-table-column prop="EStation" header-align="center" align="center" label="终点站"></el-table-column>
+      <el-table-column prop="TrainNumber" header-align="center" align="center" label="列车号"></el-table-column>
+      <el-table-column prop="BTime" header-align="center" align="center" label="开车时间">
+        <template slot-scope="scope">
+          <svg-icon icon-class="time"></svg-icon>
+          <span style="margin-left: 5px">{{ scope.row.BTime }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="ATIME" header-align="center" align="center" label="到站时间">
+        <template slot-scope="scope">
+          <svg-icon icon-class="time"></svg-icon>
+          <span style="margin-left: 5px">{{ scope.row.ATIME }}</span>
+        </template>
+      </el-table-column>
     </el-table>
     <br>
     <br>
@@ -25,12 +38,12 @@
       <el-pagination @current-change="currentChangeHandle()" :total="totalPage" :current-page="pageIndex" :page-size="pageSize" layout="total,prev, pager, next, jumper">
       </el-pagination>
     </div>
-
   </div>
 </template>
 <script>
 import TopNav from '@/components/common/topNav/index'
 export default {
+
   data () {
     return {
       //顶部导航
@@ -38,13 +51,12 @@ export default {
         showBack: false,
         titleContent: '车票查询结果'
       },
-      dataListLoading: false,// 表单加载进度条
-      // 表格
-      queryTicketTable: [],
+      // 列车查询表单
+      queryTrainTable: [],
       // 分页
       totalPage: 4,
       pageIndex: 1,
-      pageSize: 10,
+      pageSize: 10
     }
   },
   components: {
@@ -56,19 +68,17 @@ export default {
 
   methods: {
     /**
-     * @description: 车站信息查询
-     * @param {type} 
-     * @return: 车站列表信息
-     */
+       * @description: 车票信息查询
+       * @param {type} 
+       * @return: 车站列表信息
+       */
     getDataList () {
       this.dataListLoading = true
       // 获取数据，最后要将dataListLoading设置为false
       // alert("数据已获取！")
-      this.queryTicketTable = [
-        { City: '北京', Province: '北京' },
-        { City: '邯郸', Province: '河北' },
-        { City: '晋城', Province: '山西' },
-        { City: '青岛', Province: '山东' }
+      this.queryTrainTable = [
+        { SStation: '北京西', EStation: '十堰', TrainNumber: 'K279', BTime: '2019-10-01 14:23:12', ATIME: '2019-10-03 14:23:12' },
+        { SStation: '郑州', EStation: '平顶山', TrainNumber: 'K229', BTime: '2019-12-01 14:23:12', ATIME: '2019-11-13 14:23:12' }
       ]
       this.dataListLoading = false
     },
@@ -85,14 +95,6 @@ export default {
       }
       return '';
     },
-    /**
-    * @description: 请求对应页的数据
-    * @author：牛兴炜
-    * @param {this.pageIndex（当前页数）}
-    * @return: 对应页的数据
-    */
-    currentChangeHandle (val) {
-    },
   }
 }
 </script>
@@ -101,11 +103,10 @@ export default {
 .nav {
   background-color: #1fcca9;
 }
-.el-table .warning-row {
+.warning-row {
   background: green;
 }
-
-.el-table .success-row {
+.success-row {
   background: green;
 }
 </style>

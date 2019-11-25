@@ -1,7 +1,7 @@
 <!--
  * @Author: 牛兴炜
  * @Date: 2019-11-24 09:49:42
- * @LastEditTime: 2019-11-24 13:12:16
+ * @LastEditTime: 2019-11-25 08:46:50
  * @LastEditors: Please set LastEditors
  * @Description: 主界面点击查询按钮，跳转到查询类别界面
  * @FilePath: \12306\src\views\admin\searchType.vue
@@ -15,16 +15,16 @@
     <br>
 
     <!--添加查询类别选择框 -->
-    <el-form class="type" >
+    <el-form class="type">
       <el-form-item label="请选择查询类别">
 
-  <el-select v-model="selectType" clearable placeholder="请选择查询类别">
-        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-        </el-option>
-      </el-select>
-      <el-button type="success" icon="el-icon-search" @click="search">查询</el-button>
+        <el-select v-model="selectType" clearable placeholder="请选择查询类别">
+          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+          </el-option>
+        </el-select>
+        <el-button type="success" icon="el-icon-search" @click="search">查询</el-button>
       </el-form-item>
-    <br>
+      <br>
       <!-- 存放可视化 -->
       <div id="typeEchart"></div>
       <!-- 动态数据可视化 -->
@@ -122,13 +122,25 @@ export default {
     currentChangeHandle (val) {
     },
     /**
-     * @description: 查询界面查询按钮
-     * @param {type} 
+     * @description: 根据查询界面查询选择跳转不同的界面
+     * @param {type} 界面的跳转
      * @return: 
      */
     search () {
       console.log("当前选择结果")
       console.log(this.selectType)
+      if (this.selectType === 'searchStation') {
+        this.$router.push('searchStation')
+      }
+      if (this.selectType === 'searchPassenger') {
+        this.$router.push('searchPassenger')
+      }
+      if (this.selectType === 'searchTicket') {
+        this.$router.push('searchTicket')
+      }
+      if (this.selectType === 'searchTrain') {
+        this.$router.push('searchTrain')
+      }
     },
     /**
      * @description: 查询类别的可视化显示

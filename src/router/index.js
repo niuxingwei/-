@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-10-23 21:43:00
- * @LastEditTime: 2019-11-24 09:56:30
+ * @LastEditTime: 2019-11-25 09:43:31
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \simple-login-master\src\router\index.js
@@ -12,10 +12,16 @@ import Router from "vue-router"
 import errPage from "@/views/common/errPage"
 import login from "@/views/Login/login"
 import home from "@/views/admin/home"
+
 import register from "@/views/Login/register"
 import Address from "@/views/admin/address"
+
 import searchType from "@/views/admin/searchType"
-import searchResult from "@/views/admin/searchResult"
+import searchStation from "@/views/admin/searchStation"
+
+import searchPassenger from "@/views/admin/searchPassenger"
+import searchTicket from "@/views/admin/searchTicket"
+import searchTrain from "@/views/admin/searchTrain"
 Vue.use(Router)
 
 export default new Router({
@@ -41,12 +47,24 @@ export default new Router({
       component: Address
     },
     {
-      path: "/searchResult",
-      component: searchResult
+      path: "/searchStation",
+      component: searchStation
     },
     {
       path: "/searchType",
       component: searchType
+    },
+    {
+      path: "/searchPassenger",
+      component: searchPassenger
+    },
+    {
+      path: "/searchTicket",
+      component: searchTicket
+    },
+    {
+      path: "/searchTrain",
+      component: searchTrain
     },
     {
       path: "/404",
