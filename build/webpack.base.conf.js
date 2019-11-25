@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-10-23 21:43:00
- * @LastEditTime: 2019-11-17 14:17:37
+ * @LastEditTime: 2019-11-25 17:19:40
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \12306\build\webpack.base.conf.js
@@ -21,6 +21,9 @@ module.exports = {
   entry: {
     app: './src/main.js'
   },
+  externals:{
+    "BMap":"BMap"
+},
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
