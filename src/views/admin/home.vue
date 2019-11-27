@@ -1,7 +1,7 @@
 <!--
  * @Author: 牛兴炜
  * @Date: 2019-10-28 22:12:02
- * @LastEditTime: 2019-11-24 09:57:07
+ * @LastEditTime: 2019-11-27 09:56:26
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \simple-login-master\src\views\admin\home.vue
@@ -24,17 +24,21 @@
         <div class="train-search-place clearfix">
           <span class="place-start">
             <span>始发站</span>
-            <router-link class="link" :to="{ path: '/address', query: { flag: 'start' } }">{{ startCity }}</router-link>
+            <router-link class="link" :to="{ path: '/address', query: { flag: 'start' } }">
+              <h2>{{ startCity }}</h2>
+            </router-link>
           </span>
           <el-tooltip content="点击互换站点" placement="bottom" effect="light">
-            <span class="svg-wrapper" @click="qiehuan">
+            <span class="svg-wrapper_" @click="qiehuan">
               <svg-icon icon-class="qiehuan"></svg-icon>
             </span>
           </el-tooltip>
 
           <span class="place-end">
             <span>终点站</span>
-            <router-link class="link" :to="{ path: '/address', query: { flag: 'end' } }">{{ endCity }}</router-link>
+            <span @click="EventendCity">
+              <h2> {{ endCity }}</h2>
+            </span>
             <!-- <router-link :to="{path:'/address',query:{flag:'end'}}">{{endCity}}</router-link> -->
           </span>
           <div class="train-search-style">
@@ -119,12 +123,32 @@
     <div class="timerMask" v-show="timeMask">
       <time-picker v-on:time-mask="hideMask"></time-picker>
     </div>
+    <el-dialog title="终点站" :visible.sync="dialogTableVisible" @close="sentValue">
+      <el-form :inline="true" v-model="station" class="addressInput">
+        <el-form-item label="终点站">
+          <el-input placeholder="请输入终点站" v-model="station.inputAddress"></el-input>
+        </el-form-item>
+        <el-form-item label="">
+          <el-button type="primary" @click="goSearch1()">确认</el-button>
+        </el-form-item>
+      </el-form>
+      <!-- <div id="allmap"></div>
+      <div class="home-notice">
+        <span class="svg-wrapper">
+          <svg-icon icon-class="police"></svg-icon>
+        </span>
+        <span>
+          温馨提示：铁路12306每日06：00-23：00提供服务，在铁路12306购票，改签和退票须不晚于开车前30分钟
+        </span>
+      </div> -->
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import TopNav from '@/components/common/topNav/index'
 import TimePicker from '@/components/common/timer/time'
+import BMap from 'BMap'
 export default {
   name: 'home',
   components: {
@@ -133,6 +157,9 @@ export default {
   },
   data () {
     return {
+      station: {
+        inputAddress: ''
+      },
       //顶部导航
       showContent: {
         showBack: false,
@@ -140,9 +167,10 @@ export default {
       },
       startCity: '', //始发站
       // 点击查询按钮是出发事件响应，向后台传递数据 用以检测车票余额
-      endCity: '', //终点站
+      endCity: '十堰', //终点站
       timeMask: false, //时间选择遮罩层
       radio: '0',
+
       history1: "北京西-深圳",
       history2: "北京-天津南",
       //底部nav当前选中项
@@ -167,12 +195,85 @@ export default {
           iconContent: '我的12306'
         },
       ],
-
+      dialogTableVisible: false, // 是否显示弹出框
+      address_detail: null, //详细地址
+      userlocation: { lng: "", lat: "" }
     }
   },
+  // mounted () {
+  //   setTimeout(() => {
+  //     this.showMap(row)
+  //   }, 500);
+  //   /**
+  //      * @description: 输入地址名称在地图上显示
+  //      * @param {type} 
+  //      * @return: 地图的显示
+  //      */
+  //   this.$nextTick(function () {
+
+  //     var th = this
+  //     // 创建Map实例
+  //     var map = new BMap.Map("allmap");
+  //     // 初始化地图,设置中心点坐标，
+  //     var point = new BMap.Point(116.343048, 39.952061); // 创建点坐标，北京交通大学经纬度坐标
+  //     map.centerAndZoom(point, 15);
+  //     map.enableScrollWheelZoom();
+  //     var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
+  //       {
+  //         "input": "suggestId"
+  //         , "location": map
+  //       })
+  //     var myValue
+
+  //     ac.addEventListener("onconfirm", function (e) {    //鼠标点击下拉列表后的事件
+  //       var _value = e.item.value;
+  //       myValue = _value.province + _value.city + _value.district + _value.street + _value.business;
+  //       this.address_detail = myValue
+  //       setPlace();
+  //     });
+
+
+
+  //     function setPlace () {
+  //       map.clearOverlays();    //清除地图上所有覆盖物
+  //       function myFun () {
+  //         th.userlocation = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
+  //         map.centerAndZoom(th.userlocation, 18);
+  //         map.addOverlay(new BMap.Marker(th.userlocation));    //添加标注
+  //       }
+
+  //       var local = new BMap.LocalSearch(map, { //智能搜索
+  //         onSearchComplete: myFun
+  //       });
+  //       local.search(myValue);
+
+  //       //测试输出坐标（指的是输入框最后确定地点的经纬度）
+  //       map.addEventListener("click", function (e) {
+  //         //经度
+  //         console.log(th.userlocation.lng);
+  //         //维度
+  //         console.log(th.userlocation.lat);
+
+  //       })
+  //     }
+
+  //   })
+  // },
   created () {
-    this.startCity = '北京西'
-    this.endCity = '十堰'
+    let self = this;
+    /* 选择的城市 */
+    let cityname = this.$route.query.Select;
+    if (cityname && this.$route.query.flag === 'start') {
+      this.startCity = cityname
+    } else {
+      this.startCity = "北京西";
+    }
+    // if (cityname && this.$route.query.flag === 'end') {
+    //   this.endCity = cityname;
+    // } else {
+    //   this.endCity = "十堰";
+    // }
+    console.log("始发站---->" + this.startCity)
   },
   computed: {
     checkDate () {
@@ -182,6 +283,20 @@ export default {
     }
   },
   methods: {
+    /**
+ * @description: 查询按钮出发事件
+ * @param {type} 
+ * @return: 
+ */
+    goSearch () {
+      console.log("选择的城市" + "---->" + this.address_detail)
+      setTimeout(() => {
+        loading.close();
+      }, 2000);
+      let flag = this.$route.query.flag;
+      this.$router.push({ path: '/home', query: { Select: this.address_detail, flag: flag } })
+
+    },
     /*选择时间*/
     checkDateEvent () {
       this.timeMask = true
@@ -189,6 +304,18 @@ export default {
     /*隐藏蒙版*/
     hideMask () {
       this.timeMask = false
+    },
+    /**
+     * @description: 
+     * @param {type} 
+     * @return: 
+     */
+    goSearch1 () {
+      this.$notify({
+        title: '温馨提示',
+        message: '切换成功！点击右上角关闭即可',
+        type: 'success'
+      });
     },
     /**
      * @description: 终点站和始发站之间的相互切换
@@ -265,6 +392,26 @@ export default {
           message: '抱歉，该服务未开启哦'
         });
       }
+    },
+    /**
+     * @description: 显示终点车站
+     * @param {type} 
+     * @return: 
+     */
+    EventendCity () {
+      this.dialogTableVisible = true
+      console.log("终点站" + this.station.inputAddress)
+      this.sentValue()
+    },
+    /**
+     * @description: 关闭dialog时传值
+     * @param {type} 
+     * @return: 
+     */
+    sentValue () {
+      console.log("终点站" + this.station.inputAddress)
+
+      this.endCity = this.station.inputAddress
     }
   }
 }
@@ -273,6 +420,20 @@ export default {
 .homeContent {
   background-color: #edf1fa;
 }
+// #allmap {
+//   width: 80%;
+//   height: 500px;
+//   margin-top: 2%;
+//   margin-left: 10%;
+//   font-family: '微软雅黑';
+//   border: 1px solid green;
+//   /* #allmap {
+//   width: 80%;
+//   height: 500px;
+//   margin-top: 5%;
+//   margin-left: 10%;
+// } */
+// }
 .home-train-search {
   text-align: center;
   float: left;
@@ -377,6 +538,14 @@ export default {
   text-align: center;
   color: #1ec7a9;
 }
+.svg-wrapper_ {
+  width: 20%;
+  margin-top: 14px;
+  font-size: 19px;
+  text-align: center;
+  color: #1ec7a9;
+}
+
 .link {
   text-decoration: none;
 }
@@ -493,6 +662,9 @@ export default {
 /*选中设置颜色*/
 .active-color {
   color: #1fcca9 !important;
+}
+.addressInput {
+  margin-left: 5%;
 }
 /*底部nav*/
 .nav {

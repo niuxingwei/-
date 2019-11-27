@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-11-25 21:01:45
- * @LastEditTime: 2019-11-26 09:18:57
+ * @LastEditTime: 2019-11-27 09:52:00
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \12306\src\views\admin\address_t.vue
@@ -13,7 +13,7 @@
     </div>
     <br>
     <el-form :inline="true" class="addressInput">
-      <el-form-item label="查询地址">
+      <el-form-item label="始发站">
         <el-input id="suggestId" name="address_detail" placeholder="请输入地址" v-model="address_detail"></el-input>
       </el-form-item>
       <el-form-item label="">
@@ -29,6 +29,7 @@
         温馨提示：铁路12306每日06：00-23：00提供服务，在铁路12306购票，改签和退票须不晚于开车前30分钟
       </span>
     </div>
+
   </div>
 </template>
 <script>
@@ -44,7 +45,8 @@ export default {
         titleContent: '选择城市'
       },
       address_detail: null, //详细地址
-      userlocation: { lng: "", lat: "" },
+      userlocation: { lng: "", lat: "" }
+
     }
   },
   components: {
@@ -114,13 +116,12 @@ export default {
      */
     goSearch () {
       console.log("选择的城市" + "---->" + this.address_detail)
-      this.$message({
-        message: '选择成功！即将返回主页',
-        type: 'success'
-      });
 
+      setTimeout(() => {
+        loading.close();
+      }, 2000);
       let flag = this.$route.query.flag;
-      this.$router.push({ path: '/home', query: { Select: this.address_detail } })
+      this.$router.push({ path: '/home', query: { Select: this.address_detail, flag: flag } })
 
     }
   }
