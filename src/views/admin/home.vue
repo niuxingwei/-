@@ -1,7 +1,7 @@
 <!--
  * @Author: 牛兴炜
  * @Date: 2019-10-28 22:12:02
- * @LastEditTime: 2019-11-27 09:56:26
+ * @LastEditTime: 2019-11-28 09:27:41
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \simple-login-master\src\views\admin\home.vue
@@ -25,7 +25,7 @@
           <span class="place-start">
             <span>始发站</span>
             <router-link class="link" :to="{ path: '/address', query: { flag: 'start' } }">
-              <h2>{{ startCity }}</h2>
+              <span class="font"> {{ startCity }}</span>
             </router-link>
           </span>
           <el-tooltip content="点击互换站点" placement="bottom" effect="light">
@@ -37,7 +37,8 @@
           <span class="place-end">
             <span>终点站</span>
             <span @click="EventendCity">
-              <h2> {{ endCity }}</h2>
+              <br>
+              <span class="font"> {{ endCity }}</span>
             </span>
             <!-- <router-link :to="{path:'/address',query:{flag:'end'}}">{{endCity}}</router-link> -->
           </span>
@@ -149,6 +150,7 @@
 import TopNav from '@/components/common/topNav/index'
 import TimePicker from '@/components/common/timer/time'
 import BMap from 'BMap'
+import { homeSearchBySelect } from '@/api/homeSearch'
 export default {
   name: 'home',
   components: {
@@ -170,7 +172,7 @@ export default {
       endCity: '十堰', //终点站
       timeMask: false, //时间选择遮罩层
       radio: '0',
-
+      time: '',//查询时间
       history1: "北京西-深圳",
       history2: "北京-天津南",
       //底部nav当前选中项
@@ -279,6 +281,7 @@ export default {
     checkDate () {
       console.log('测试时间')
       console.log(this.$store.state.checkedTime)
+      this.time = this.$store.state.checkDate
       return this.$store.state.checkedTime
     }
   },
@@ -313,7 +316,7 @@ export default {
     goSearch1 () {
       this.$notify({
         title: '温馨提示',
-        message: '切换成功！点击右上角关闭即可',
+        message: '查询成功！点击右上角关闭即可',
         type: 'success'
       });
     },
@@ -341,6 +344,11 @@ export default {
     search () {
       console.log("查询数据")
       this.$router.push('searchType')
+      homeSearchBySelect(this.startCity, this.endCity, this.radio, this.$store.state.checkedTime).then((response) => {
+        console.log("后台传递数据")
+        console.log(response.data)
+      })
+
       const loading = this.$loading({
         lock: true,
         text: 'Loading',
@@ -662,6 +670,12 @@ export default {
 /*选中设置颜色*/
 .active-color {
   color: #1fcca9 !important;
+}
+// 设置字体样式
+.font {
+  font-family: serif;
+  font-size: 18px;
+  font-weight: 200;
 }
 .addressInput {
   margin-left: 5%;

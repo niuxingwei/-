@@ -1,7 +1,7 @@
 <!--
  * @Author: 牛兴炜
  * @Date: 2019-11-24 09:49:42
- * @LastEditTime: 2019-11-25 08:46:50
+ * @LastEditTime: 2019-11-28 09:52:23
  * @LastEditors: Please set LastEditors
  * @Description: 主界面点击查询按钮，跳转到查询类别界面
  * @FilePath: \12306\src\views\admin\searchType.vue
@@ -49,6 +49,7 @@
 // import echarts from 'echarts'
 const echarts = require('echarts')
 import TopNav from '@/components/common/topNav/index'
+import { searchType } from '@/api/homeSearch'
 export default {
   data () {
     return {
@@ -129,6 +130,10 @@ export default {
     search () {
       console.log("当前选择结果")
       console.log(this.selectType)
+      searchType(this.selectType).then((response) => {
+        console.log("后台传递数据")
+        console.log(response.data)
+      })
       if (this.selectType === 'searchStation') {
         this.$router.push('searchStation')
       }
@@ -384,5 +389,8 @@ export default {
   text-align: center;
   font-size: 18px;
   font-family: monospace;
+}
+.searchResult {
+  min-width: 1200px;
 }
 </style>

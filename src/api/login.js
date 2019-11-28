@@ -2,7 +2,7 @@
  * @Description: 登录请求
  * @Author: your name
  * @Date: 2019-07-06 08:39:24
- * @LastEditTime: 2019-11-18 21:29:55
+ * @LastEditTime: 2019-11-28 18:31:53
  * @LastEditors: Please set LastEditors
  */
 
@@ -11,7 +11,7 @@ import http from '@/utils/request'
 export function loginByUsername(loginForm) {
   const data = {
     account: loginForm.userAccount, // 账号
-    pwd: loginForm.userPassword
+    pass: loginForm.userPassword
   }
   console.log('data:', data)
   return http({
