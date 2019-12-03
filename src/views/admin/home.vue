@@ -1,7 +1,7 @@
 <!--
  * @Author: 牛兴炜
  * @Date: 2019-10-28 22:12:02
- * @LastEditTime: 2019-11-28 09:27:41
+ * @LastEditTime: 2019-12-02 19:58:15
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \simple-login-master\src\views\admin\home.vue
@@ -345,8 +345,11 @@ export default {
       console.log("查询数据")
       this.$router.push('searchType')
       homeSearchBySelect(this.startCity, this.endCity, this.radio, this.$store.state.checkedTime).then((response) => {
+        let result = response.data.data
         console.log("后台传递数据")
         console.log(response.data)
+        // console.log("传递的时间" + result.ETime)
+
       })
 
       const loading = this.$loading({

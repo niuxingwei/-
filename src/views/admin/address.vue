@@ -115,7 +115,7 @@ export default {
      * @return: 
      */
     goSearch () {
-      console.log("选择的城市" + "---->" + this.address_detail)
+      // console.log("选择的城市" + "---->" + this.address_detail)
 
       setTimeout(() => {
         loading.close();

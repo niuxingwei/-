@@ -59,11 +59,18 @@ export default {
         alert("！");
         return;
       }
-      year = year + '年';
-      month = month + "月";
-      day = day + '日';
+      year = year + '-';
+      if (month < 10) {
+        month = '0' + month + '-';
+      } else {
+        month = month + '-'
+      }
+      if (day < 10) {
+        day = '0' + day;
+      }
+
       /*修改值*/
-      this.$store.commit('changeTime', month + day);
+      this.$store.commit('changeTime', year + month + day);
       /*隐藏蒙版*/
       this.$emit('time-mask');
 

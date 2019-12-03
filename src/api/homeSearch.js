@@ -1,7 +1,7 @@
 /*
  * @Author: 牛兴炜
  * @Date: 2019-11-28 08:45:24
- * @LastEditTime: 2019-11-28 09:52:58
+ * @LastEditTime: 2019-12-02 16:44:08
  * @LastEditors: Please set LastEditors
  * @Description: 查询界面的查询按钮参数传递
  * @FilePath: \12306\src\api\homeSearch.js
@@ -15,8 +15,8 @@ import http from '@/utils/request'
 export function homeSearchBySelect(sstaion,estation,radio,time){
   console.log("前端home传递数据")
   const data={
-    startCity:sstaion,
-    endCity:estation,
+    SStation:sstaion,
+    EStation:estation,
     redio:radio,
     selectedTime:time
   }

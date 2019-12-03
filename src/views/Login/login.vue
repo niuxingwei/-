@@ -1,7 +1,7 @@
 <!--
  * @Author:牛兴炜
  * @Date: 2019-10-23 21:43:00
- * @LastEditTime: 2019-11-28 23:33:23
+ * @LastEditTime: 2019-12-02 18:40:21
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \simple-login-master\src\views\Login\index.vue
@@ -88,7 +88,7 @@ export default {
     userLogin () {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          // this.$router.push('home')
+          this.$router.push('home')
           loginByUsername(this.loginForm).then((response) => {
             console.log("后台传递数据")
             console.log(response.data)
@@ -97,7 +97,7 @@ export default {
               this.$message.error("该用户未注册，请先注册！")
             }
             if (result[0].pass === this.loginForm.userPassword) {
-              this.$router.push('home')
+              // this.$router.push('home')
             } else {
               this.$message.error("用户名或密码不正确，请检查！")
             }
