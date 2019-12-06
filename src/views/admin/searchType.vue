@@ -1,7 +1,7 @@
 <!--
  * @Author: 牛兴炜
  * @Date: 2019-11-24 09:49:42
- * @LastEditTime: 2019-12-02 22:39:32
+ * @LastEditTime: 2019-12-06 15:38:09
  * @LastEditors: Please set LastEditors
  * @Description: 主界面点击查询按钮，跳转到查询类别界面
  * @FilePath: \12306\src\views\admin\searchType.vue
@@ -133,19 +133,23 @@ export default {
       searchType(this.selectType).then((response) => {
         console.log("选择界面后台传递数据")
         console.log(response.data)
+        if (this.selectType === 'searchStation') {
+          // this.$router.push('searchStation')
+          this.$router.push({ path: '/searchStation', query: { SelectTable: response.data } })
+        }
+        if (this.selectType === 'searchPassenger') {
+          // this.$router.push('searchPassenger')
+          this.$router.push({ path: '/searchPassenger', query: { SelectTable: response.data } })
+        }
+        if (this.selectType === 'searchTicket') {
+          // this.$router.push('searchTicket')
+          this.$router.push({ path: '/searchTicket', query: { SelectTable: response.data } })
+        }
+        if (this.selectType === 'searchTrain') {
+          // this.$router.push('searchTrain')
+          this.$router.push({ path: '/searchTrain', query: { SelectTable: response.data } })
+        }
       })
-      if (this.selectType === 'searchStation') {
-        this.$router.push('searchStation')
-      }
-      if (this.selectType === 'searchPassenger') {
-        this.$router.push('searchPassenger')
-      }
-      if (this.selectType === 'searchTicket') {
-        this.$router.push('searchTicket')
-      }
-      if (this.selectType === 'searchTrain') {
-        this.$router.push('searchTrain')
-      }
     },
     /**
      * @description: 查询类别的可视化显示

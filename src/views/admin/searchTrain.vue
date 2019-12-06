@@ -1,7 +1,7 @@
 <!--
  * @Author: 牛兴炜
  * @Date: 2019-11-25 08:14:58
- * @LastEditTime: 2019-11-25 10:54:22
+ * @LastEditTime: 2019-12-06 15:57:26
  * @LastEditors: Please set LastEditors
  * @Description: 列车信息查询
  * @FilePath: \12306\src\views\admin\searchTrain.vue
@@ -76,10 +76,21 @@ export default {
       this.dataListLoading = true
       // 获取数据，最后要将dataListLoading设置为false
       // alert("数据已获取！")
-      this.queryTrainTable = [
-        { SStation: '北京西', EStation: '十堰', TrainNumber: 'K279', BTime: '2019-10-01 14:23:12', ATIME: '2019-10-03 14:23:12' },
-        { SStation: '郑州', EStation: '平顶山', TrainNumber: 'K229', BTime: '2019-12-01 14:23:12', ATIME: '2019-11-13 14:23:12' }
-      ]
+      let queryTrainTableTem = []// 将符合的数据存放进去
+      this.$route.query.SelectTable.forEach(temCurrent => {
+        queryTrainTableTem.push({
+          SStation: temCurrent.SStation,
+          EStation: temCurrent.EStation,
+          BTime: temCurrent.STime,
+          ATIME: temCurrent.ETime,
+          TrainNumber: temCurrent.TrainNUmber,
+        })
+      })
+      this.queryTrainTable = queryTrainTableTem
+      // this.queryTrainTable = [
+      //   { SStation: '北京西', EStation: '十堰', TrainNumber: 'K279', BTime: '2019-10-01 14:23:12', ATIME: '2019-10-03 14:23:12' },
+      //   { SStation: '郑州', EStation: '平顶山', TrainNumber: 'K229', BTime: '2019-12-01 14:23:12', ATIME: '2019-11-13 14:23:12' }
+      // ]
       this.dataListLoading = false
     },
     /**

@@ -1,7 +1,7 @@
 <!--
  * @Author: 牛兴炜
  * @Date: 2019-11-25 08:16:32
- * @LastEditTime: 2019-11-25 10:41:59
+ * @LastEditTime: 2019-12-06 15:54:16
  * @LastEditors: Please set LastEditors
  * @Description: 车票信息查询界面
  * @FilePath: \12306\src\views\admin\searchTicket.vue
@@ -85,9 +85,23 @@ export default {
       this.dataListLoading = true
       // 获取数据，最后要将dataListLoading设置为false
       // alert("数据已获取！")
-      this.queryTicketTable = [
-        { UName: '牛兴炜', Price: '197', BTime: '2019-10-01 14:23:12', ATIME: '2019-10-02 10:00:46', TrainNumber: 'K279', BStatiom: '北京西', AStion: '十堰' }
-      ]
+      let queryTicketTableTem = []// 将符合的数据存放进去
+      this.$route.query.SelectTable.forEach(temCurrent => {
+        queryTicketTableTem.push({
+          UName: temCurrent.UName,
+          Price: temCurrent.Price,
+          BTime: temCurrent.BTime,
+          ATIME: temCurrent.ATIME,
+          TrainNumber: temCurrent.TrainNUmber,
+          BStatiom: temCurrent.BStation,
+          AStion: temCurrent.AStation
+        })
+      })
+      this.queryTicketTable = queryTicketTableTem
+      console.log(this.queryTicketTable)
+      // this.queryTicketTable = [
+      //   { UName: '牛兴炜', Price: '197', BTime: '2019-10-01 14:23:12', ATIME: '2019-10-02 10:00:46', TrainNumber: 'K279', BStatiom: '北京西', AStion: '十堰' }
+      // ]
       this.dataListLoading = false
     },
     /**

@@ -1,3 +1,9 @@
+
+
+
+
+
+
 let maxParticles = 80
 let particles = []
 let frequency = 100

@@ -1,7 +1,7 @@
 <!--
  * @Author: 牛兴炜
  * @Date: 2019-11-25 08:16:56
- * @LastEditTime: 2019-11-25 11:18:42
+ * @LastEditTime: 2019-12-06 15:40:52
  * @LastEditors: Please set LastEditors
  * @Description: 乘客信息查询界面
  * @FilePath: \12306\src\views\admin\searchPassenger.vue
@@ -86,12 +86,22 @@ export default {
       this.dataListLoading = true
       // 获取数据，最后要将dataListLoading设置为false
       // alert("数据已获取！")
-      this.queryPassengerTable = [
-        { UName: '牛兴炜', Sex: '男', IDcard: '61243019960XXX', Phone: '18617771777' },
-        { UName: '张海燕', Sex: '女', IDcard: '61243019960XXX', Phone: '18617771777' },
-        { UName: '牛兴炜', Sex: '男', IDcard: '61243019960XXX', Phone: '18617771777' },
-        { UName: '张海燕', Sex: '女', IDcard: '61243019960XXX', Phone: '18617771777' }
-      ]
+      let queryPassengerTableTem = []// 将符合的数据存放进去
+      this.$route.query.SelectTable.forEach(temCurrent => {
+        queryPassengerTableTem.push({
+          UName: temCurrent.UName,
+          Sex: temCurrent.Sex,
+          IDcard: temCurrent.IDcard,
+          Phone: temCurrent.Phone
+        })
+      })
+      this.queryPassengerTable = queryPassengerTableTem
+      // this.queryPassengerTable = [
+      //   { UName: '牛', Sex: '男', IDcard: '61243019960XXX', Phone: '18617771777' },
+      //   { UName: '张', Sex: '女', IDcard: '61243019960XXX', Phone: '18617771777' },
+      //   { UName: '牛兴', Sex: '男', IDcard: '61243019960XXX', Phone: '18617771777' },
+      //   { UName: '张海', Sex: '女', IDcard: '61243019960XXX', Phone: '18617771777' }
+      // ]
       this.dataListLoading = false
     },
     /**

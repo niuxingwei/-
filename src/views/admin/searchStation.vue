@@ -1,7 +1,7 @@
 <!--
  * @Author: 牛兴炜
  * @Date: 2019-11-19 16:39:17
- * @LastEditTime: 2019-11-25 10:31:36
+ * @LastEditTime: 2019-12-06 15:36:15
  * @LastEditors: Please set LastEditors
  * @Description: 车票查询结果界面
  * @FilePath: \12306\src\views\admin\searchResult.vue
@@ -68,14 +68,22 @@ export default {
      */
     getDataList () {
       this.dataListLoading = true
-      // 获取数据，最后要将dataListLoading设置为false
-      // alert("数据已获取！")
-      this.queryTicketTable = [
-        { City: '北京', Province: '北京', Balance: 20 },
-        { City: '邯郸', Province: '河北', Balance: 40 },
-        { City: '晋城', Province: '山西', Balance: 35 },
-        { City: '青岛', Province: '山东', Balance: 28 }
-      ]
+      let queryTicketTableTem = []// 将符合的数据存放进去
+      this.$route.query.SelectTable.forEach(temCurrent => {
+        queryTicketTableTem.push({
+          City: temCurrent.City,
+          Province: temCurrent.Province,
+          Balance: 20
+        })
+      })
+      this.queryTicketTable = queryTicketTableTem
+      console.log(this.queryTicketTable)
+      // this.queryTicketTable = [
+      //   { City: '北京', Province: '北京', Balance: 20 },
+      //   { City: '邯郸', Province: '河北', Balance: 40 },
+      //   { City: '晋城', Province: '山西', Balance: 35 },
+      //   { City: '青岛', Province: '山东', Balance: 28 }
+      // ]
       this.dataListLoading = false
     },
     /**
