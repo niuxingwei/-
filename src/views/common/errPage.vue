@@ -1,8 +1,8 @@
 <!--
  * @Description: 404页面
  * @Author: 牛兴炜
- * @Date: 2019-10-16 07:24:51
- * @LastEditTime: 2019-10-23 22:25:26
+ * @Date: 2020-06-29 07:24:51
+ * @LastEditTime: 2020-06-30 10:58:51
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -20,10 +20,10 @@ export default {
 .notfound {
   text-align: center;
   margin-top: 10%;
-  font-family: "Times New Roman", Times, serif;
+  font-family: 'Times New Roman', Times, serif;
 }
 .notice {
-  font-family: "Courier New", Courier, monospace;
+  font-family: 'Courier New', Courier, monospace;
   font-size: 30px;
 }
 </style>

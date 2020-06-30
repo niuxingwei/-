@@ -1,7 +1,7 @@
 <!--
  * @Author: 牛兴炜
- * @Date: 2019-11-24 09:49:42
- * @LastEditTime: 2019-12-06 15:38:09
+ * @Date: 2020-06-24 09:49:42
+ * @LastEditTime: 2020-06-30 11:01:39
  * @LastEditors: Please set LastEditors
  * @Description: 主界面点击查询按钮，跳转到查询类别界面
  * @FilePath: \12306\src\views\admin\searchType.vue

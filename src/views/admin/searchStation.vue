@@ -1,7 +1,7 @@
 <!--
  * @Author: 牛兴炜
- * @Date: 2019-11-19 16:39:17
- * @LastEditTime: 2019-12-06 15:36:15
+ * @Date: 2020-06-19 16:39:17
+ * @LastEditTime: 2020-06-30 10:58:17
  * @LastEditors: Please set LastEditors
  * @Description: 车票查询结果界面
  * @FilePath: \12306\src\views\admin\searchResult.vue

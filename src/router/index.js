@@ -1,7 +1,7 @@
 /*
  * @Author: your name
- * @Date: 2019-10-23 21:43:00
- * @LastEditTime: 2019-11-27 09:34:37
+ * @Date: 2020-06-29 21:43:00
+ * @LastEditTime: 2020-06-30 11:00:41
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \simple-login-master\src\router\index.js

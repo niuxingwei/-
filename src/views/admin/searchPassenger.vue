@@ -1,7 +1,7 @@
 <!--
  * @Author: 牛兴炜
- * @Date: 2019-11-25 08:16:56
- * @LastEditTime: 2019-12-06 15:40:52
+ * @Date: 2020-06-26 08:16:56
+ * @LastEditTime: 2020-06-30 10:58:09
  * @LastEditors: Please set LastEditors
  * @Description: 乘客信息查询界面
  * @FilePath: \12306\src\views\admin\searchPassenger.vue

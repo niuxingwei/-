@@ -1,7 +1,7 @@
 /*
- * @Author: your name
- * @Date: 2019-10-23 21:43:00
- * @LastEditTime: 2019-11-19 17:33:59
+ * @Author: 牛兴炜
+ * @Date: 2020-06-29 21:43:00
+ * @LastEditTime: 2020-06-30 10:59:35
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \12306\build\webpack.dev.conf.js

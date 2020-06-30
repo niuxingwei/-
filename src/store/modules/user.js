@@ -1,8 +1,8 @@
 /*
  * @Description: 用户信息
  * @Author: your name
- * @Date: 2019-07-30 11:40:12
- * @LastEditTime: 2019-09-17 09:44:48
+ * @Date: 2020-06-28 11:40:12
+ * @LastEditTime: 2020-06-30 11:01:00
  * @LastEditors: Please set LastEditors
  */
 const user = {

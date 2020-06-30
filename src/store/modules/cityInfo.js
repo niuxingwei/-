@@ -1,8 +1,8 @@
 /*
  * @Description: 城市信息
  * @Author: your name
- * @Date: 2019-08-14 19:16:03
- * @LastEditTime: 2019-08-14 19:47:14
+ * @Date: 2020-06-28 19:16:03
+ * @LastEditTime: 2020-06-30 11:00:51
  * @LastEditors: Please set LastEditors
  */
 const cityInfo = {

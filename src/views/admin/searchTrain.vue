@@ -1,7 +1,7 @@
 <!--
  * @Author: 牛兴炜
- * @Date: 2019-11-25 08:14:58
- * @LastEditTime: 2019-12-06 15:57:26
+ * @Date: 2020-06-25 08:14:58
+ * @LastEditTime: 2020-06-30 10:58:35
  * @LastEditors: Please set LastEditors
  * @Description: 列车信息查询
  * @FilePath: \12306\src\views\admin\searchTrain.vue

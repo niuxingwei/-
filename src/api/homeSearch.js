@@ -1,7 +1,7 @@
 /*
  * @Author: 牛兴炜
- * @Date: 2019-11-28 08:45:24
- * @LastEditTime: 2019-12-02 16:44:08
+ * @Date: 2020-06-28 08:45:24
+ * @LastEditTime: 2020-06-30 10:59:57
  * @LastEditors: Please set LastEditors
  * @Description: 查询界面的查询按钮参数传递
  * @FilePath: \12306\src\api\homeSearch.js
